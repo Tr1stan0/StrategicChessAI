@@ -1,0 +1,22 @@
+{
+    "pawn_value": 0.6777712147491073,
+    "knight_value": 3.056509818859004,
+    "bishop_value": 3.2770264187682825,
+    "rook_value": 5.412636144397302,
+    "queen_value": 9.428113739512563,
+    "center_control_bonus": 0.10232200971749165,
+    "king_safety_bonus": 0.26196686789462564,
+    "piece_mobility_bonus": -0.013343514653143486,
+    "double_pawn_penalty": -0.06857684396697972,
+    "isolated_pawn_penalty": 0.3358944628912015,
+    "passed_pawn_bonus": 0.38852035222870895,
+    "attacked_piece_penalty": 0.1619515244410446,
+    "piece_square_table_weight": -0.001993048269735195,
+    "king_activity_endgame": 0.18173413505464212,
+    "pawn_advancement_endgame": 0.01299352825781019,
+    "rook_open_file_bonus": 0.07076529424668684,
+    "rook_semi_open_file_bonus": 0.05911950185918219,
+    "bishop_pair_bonus": 0.36860548045279684,
+    "knight_outpost_bonus": 0.07539456982889708,
+    "king_proximity_to_center_endgame": 0.3249533740667325
+}

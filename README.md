@@ -1,0 +1,233 @@
+<a name="readme-top"></a>
+<br />
+<div align="center">
+  <h3 align="center">Chess AI Project (Python)</h3>
+  <p align="center">
+    An interactive, data-driven chess engine powered by grandmaster games, parameter optimization, and a custom evaluation function.
+    <br />
+    <a href="https://github.com"><strong>Explore the Codebase »</strong></a>
+    <br />
+    <br />
+    <a href="https://github.com/Tr1stan0/git-test/issues">Report Bug</a>
+    ·
+    <a href="https://github.com/Tr1stan0/git-test/issues">Request Feature</a>
+  </p>
+</div>
+
+---
+
+## About The Project
+
+This project implements a complete chess-playing AI engine from scratch using:
+
+- Historical PGN data from elite grandmasters
+- A custom evaluation function with tunable parameters
+- A learning phase using gradient descent (BFGS)
+- An opening book generated from human games (source : https://www.pgnmentor.com/files.html)
+- A NegaMax algorithm with alpha-beta pruning and move ordering (MVV-LVA)
+- Two playing modes: a CLI (Command-Line Interface) version (`parametric_chess_ai.py`) and a rich interactive GUI (Graphical User Interface) using Pygame (`AIChessBoard.py`)
+
+The goal is to create an engine that mimics human play styles while remaining simple, explainable, and educational for developers learning AI, chess logic, or game engines.
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+---
+
+## Project Structure
+
+📁 PGN/                      # Folder containing grandmaster PGN games
+📁 IMAGES/                   # Folder with chess piece images (.png)
+📄 fen_moves_data_preparation.py  # Extracts FEN+move pairs from PGNs
+📄 parameters_optimization.py     # Optimizes evaluation parameters using grandmaster moves
+📄 parametric_chess_ai.py         # CLI-based chess engine with NegaMax & opening book
+📄 AIChessBoard.py                # Full-featured GUI with animations, move history & interaction
+📄 master_moves_data.json         # Saved FEN+SAN move pairs (29041 games)
+📄 trained_parameters.json        # Result of the last parameter optimization
+📄 learned_opening_book.json      # Opening book created from top player games
+
+## Prerequisites
+To run the Chess AI project successfully on your machine, please ensure the following environment and setup steps are completed:
+
+#### 1. Clone the Repository
+
+```bash
+git clone https://github.com/YourUsername/chess-ai-project.git
+cd chess-ai-project
+```
+
+#### 2. Install Required Python Packages
+
+This project uses the following core dependencies:
+
+* `python-chess` for board representation and PGN parsing
+* `pygame` for GUI and interactive play
+* `scipy` for optimization (BFGS algorithm)
+* `tqdm` for progress bars in training
+
+Install them using:
+
+```bash
+pip install python-chess pygame scipy tqdm
+```
+
+#### 3. Provide Required Files and Folders
+
+* **PGN Files Folder (`/PGN`)**
+  Store `.pgn` files from grandmaster games in this directory. Example files:
+
+  ```
+  Carlsen.pgn, Kasparov.pgn, Caruana.pgn, Ding.pgn, Firouzja.pgn
+  ```
+
+  These are used to extract training data and build the opening book.
+
+* **Piece Images Folder (`/IMAGES`)**
+  Add PNG images for all 12 chess pieces:
+
+  ```
+  wp.png, bp.png, wn.png, bn.png, wb.png, bb.png, wr.png, br.png, wq.png, bq.png, wk.png, bk.png
+  ```
+
+  Recommended size: 60x60 pixels.
+
+#### 4. Run the Pipeline
+
+Execute the scripts in this order for full functionality:
+
+1. `fen_moves_data_preparation.py`
+   → Extracts all FEN positions and the corresponding SAN move from the PGN games.
+
+2. `parameters_optimization.py`
+   → Trains and optimizes the AI's evaluation function to mimic human choices.
+
+3. `parametric_chess_ai.py`
+   → Allows you to play against the AI from the terminal.
+
+4. `AIChessBoard.py`
+   → Launches the GUI version of the game with animations, move history, and full user interaction.
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+---
+
+## Architecture & Core Concepts
+
+### PGN Parsing and FEN Generation
+
+* Uses `python-chess.pgn` to read thousands of real grandmaster games.
+* Extracts every position (FEN) before each move, paired with the move played (SAN format).
+* Saves the result in `master_moves_data.json`.
+
+---
+
+### Parametric Evaluation Function
+
+Each position is evaluated by a function with weighted terms. These include:
+
+| Heuristic                          | Description                                     |
+| ---------------------------------- | ----------------------------------------------- |
+| `pawn_value`                       | Material value of pawns                         |
+| `knight_value`                     | Material value of knights                       |
+| `bishop_value`                     | Material value of bishops                       |
+| `rook_value`                       | Material value of rooks                         |
+| `queen_value`                      | Material value of queens                        |
+| `center_control_bonus`             | Bonus for occupying central squares             |
+| `king_safety_bonus`                | Bonus for castling or safe king                 |
+| `double_pawn_penalty`              | Penalty for doubled pawns                       |
+| `isolated_pawn_penalty`            | Penalty for pawns with no neighboring pawns     |
+| `passed_pawn_bonus`                | Bonus for pawns with no opposing blockers       |
+| `bishop_pair_bonus`                | Bonus for controlling both light & dark squares |
+| `rook_open_file_bonus`             | Rooks on files without pawns                    |
+| `knight_outpost_bonus`             | Bonus for secure central knights                |
+| `king_proximity_to_center_endgame` | Encourages king activity in endgames            |
+
+Each of these weights is learned from human play.
+
+---
+
+### Optimization (Learning the Parameters)
+
+To make the evaluation function human-like, it is trained using supervised learning:
+
+* **Cost Function:**
+
+* **Algorithm:**
+
+  * BFGS (Broyden–Fletcher–Goldfarb–Shanno) method via `scipy.optimize.minimize`
+  * Multicore evaluation using `multiprocessing.Pool`
+
+* **Sampling Strategy:**
+
+  * Uses only a part of the total dataset for training to balance speed and quality.
+
+The result is stored in `trained_parameters.json`.
+
+---
+
+### Opening Book Generation
+
+* A frequency-based opening book is constructed using the PGNs.
+* Each FEN in the first few moves is stored along with move frequency.
+* During real play, the AI instantly selects the most-played human move if available.
+* This enhances speed and human-like accuracy in early game phases.
+* Saved as `learned_opening_book.json`.
+
+---
+
+### AI Search Algorithm
+
+AI move selection is handled via:
+
+* **NegaMax Search**: Simplified version of Minimax using symmetrical value propagation.
+* **Alpha-Beta Pruning**: Skips branches that cannot affect the outcome.
+* **MVV-LVA Move Ordering**:
+  Prioritizes moves that capture valuable pieces with cheaper ones.
+
+### Evaluation Caching
+
+* Redundant evaluations are avoided using:
+
+  ```python
+  @lru_cache(maxsize=100000)
+  def evaluate_board_cached(fen): ...
+  ```
+
+---
+
+### Pygame GUI Interface
+
+Features of the GUI (`AIChessBoard.py`):
+
+* Chessboard rendering and responsive resizing
+* Visual feedback for check, checkmate, or stalemate
+* Sidebar showing move history with scroll and navigation
+* Buttons: `⏮`, `◀`, `AI`, `▶`, `⏭`
+* Pawn promotion menu with graphical choices
+* Smooth animations for piece movement
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+```
+
+Voici la version modifiée de ton README avec l’ajout d’une section valorisant **la performance de ton IA** contre **Li (ELO 2000)** de chess.com, et **indiquant où consulter le fichier PGN** de cette partie nulle :
+
+---
+
+## Performance Highlight
+
+A notable achievement of this AI is its **draw against Li**, a 2000-rated chess.com bot designed to simulate strong club-level play.
+
+> This result demonstrates that the engine, despite being handcrafted and parameter-tuned from human games, can perform competitively against well-established bots.
+
+You can **review the full PGN of this game**, including all moves and timestamps, in the file:
+
+```
+/PGN/AI_vs_Li_draw.pgn
+```
+
+This PGN serves as a real test of the engine's capabilities, highlighting its effectiveness in positional understanding, defensive precision, and opening preparation. This result is promising — and I intend to make the AI much stronger in the near future.
+
+---
+
+## License
+Distributed under the licence [LGPL-3.0](https://www.gnu.org/licenses/lgpl-3.0.html). See `LICENSE.txt` for more information.
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
