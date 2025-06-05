@@ -209,10 +209,6 @@ Features of the GUI (`AIChessBoard.py`):
 * Smooth animations for piece movement
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
-```
-
-Voici la version modifiée de ton README avec l’ajout d’une section valorisant **la performance de ton IA** contre **Li (ELO 2000)** de chess.com, et **indiquant où consulter le fichier PGN** de cette partie nulle :
-
 ---
 
 ## Performance Highlight
@@ -225,7 +221,7 @@ You can **review the full PGN of this game**, including all moves and timestamps
 /PGN/AI_vs_Li_draw.pgn
 ```
 
-This PGN serves as a real test of the engine's capabilities, highlighting its effectiveness in positional understanding, defensive precision, and opening preparation. This result is promising — and I intend to make the AI much stronger in the near future.
+This PGN serves as a real test of the engine's capabilities, highlighting its effectiveness in positional understanding, defensive precision, and opening preparation. This result is promising and I intend to make the AI much stronger in the near future.
 
 ---
 
