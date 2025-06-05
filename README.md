@@ -35,15 +35,18 @@ The goal is to create an engine that mimics human play styles while remaining si
 
 ## Project Structure
 
-📁 PGN/                      # Folder containing grandmaster PGN games
-📁 IMAGES/                   # Folder with chess piece images (.png)
-📄 fen_moves_data_preparation.py  # Extracts FEN+move pairs from PGNs
-📄 parameters_optimization.py     # Optimizes evaluation parameters using grandmaster moves
-📄 parametric_chess_ai.py         # CLI-based chess engine with NegaMax & opening book
-📄 AIChessBoard.py                # Full-featured GUI with animations, move history & interaction
-📄 master_moves_data.json         # Saved FEN+SAN move pairs (29041 games)
-📄 trained_parameters.json        # Result of the last parameter optimization
-📄 learned_opening_book.json      # Opening book created from top player games
+- 📁 **PGN/** — Folder containing grandmaster PGN games  
+- 📁 **IMAGES/** — Folder with chess piece images (.png)  
+
+- 📄 **fen_moves_data_preparation.py** — Extracts FEN+move pairs from PGNs  
+- 📄 **parameters_optimization.py** — Optimizes evaluation parameters using grandmaster moves  
+- 📄 **parametric_chess_ai.py** — CLI-based chess engine with NegaMax & opening book  
+- 📄 **AIChessBoard.py** — Full-featured GUI with animations, move history & interaction  
+
+- 📄 **master_moves_data.json** — Saved FEN+SAN move pairs (29041 games)  
+- 📄 **trained_parameters.json** — Result of the last parameter optimization  
+- 📄 **learned_opening_book.json** — Opening book created from top player games  
+
 
 ## Prerequisites
 To run the Chess AI project successfully on your machine, please ensure the following environment and setup steps are completed:
@@ -149,7 +152,7 @@ Each of these weights is learned from human play.
 
 To make the evaluation function human-like, it is trained using supervised learning:
 
-* **Cost Function:**
+* **Cost Function**
 
 * **Algorithm:**
 
@@ -214,9 +217,7 @@ Voici la version modifiée de ton README avec l’ajout d’une section valorisa
 
 ## Performance Highlight
 
-A notable achievement of this AI is its **draw against Li**, a 2000-rated chess.com bot designed to simulate strong club-level play.
-
-> This result demonstrates that the engine, despite being handcrafted and parameter-tuned from human games, can perform competitively against well-established bots.
+A notable achievement of this AI is its **draw against Li**, a 2000-rated chess.com bot designed to simulate strong club-level play. This result demonstrates that the engine, despite being handcrafted and parameter-tuned from human games, can perform competitively against well-established bots.
 
 You can **review the full PGN of this game**, including all moves and timestamps, in the file:
 
