@@ -209,6 +209,7 @@ Features of the GUI (`AIChessBoard.py`):
 * Smooth animations for piece movement
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 ---
 
 ## Performance Highlight
